@@ -44,9 +44,18 @@ public class SeedData implements CommandLineRunner
         User u1 = new User("admin",
                            "password",
                            "admin@lambdaschool.local");
+        Todos t1 = new Todos(u1, "Give Joe access rights");
+
+        /*
         u1.getTodos()
                 .add(new Todos(u1,
                                "Give Joe access rights"));
+        */
+
+        u1.getTodos().add(t1);
+
+        //u1.addTodos(new Todos(u1, "Testing the todos"));
+
         u1.getTodos()
                 .add(new Todos(u1,
                                "Change the color of the home page"));

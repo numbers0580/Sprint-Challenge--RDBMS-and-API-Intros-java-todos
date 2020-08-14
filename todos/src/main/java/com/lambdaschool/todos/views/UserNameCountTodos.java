@@ -7,6 +7,6 @@ import java.util.List;
 public interface UserNameCountTodos
 {
     String getUsername();
-    //List<Todos> getTodos();
-    String getDescription();
+    List<Todos> getTodos();
+    //String getDescription();
 }
