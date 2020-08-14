@@ -35,13 +35,11 @@ public class UserController
      * @return JSON list of all users with a status of OK
      * @see UserService#findAll() UserService.findAll()
      */
-    @GetMapping(value = "/users",
-        produces = {"application/json"})
+    @GetMapping(value = "/users", produces = {"application/json"})
     public ResponseEntity<?> listAllUsers()
     {
         List<User> myUsers = userService.findAll();
-        return new ResponseEntity<>(myUsers,
-            HttpStatus.OK);
+        return new ResponseEntity<>(myUsers, HttpStatus.OK);
     }
 
     /**
@@ -52,15 +50,11 @@ public class UserController
      * @return JSON object of the user you seek
      * @see UserService#findUserById(long) UserService.findUserById(long)
      */
-    @GetMapping(value = "/user/{userId}",
-        produces = {"application/json"})
-    public ResponseEntity<?> getUserById(
-        @PathVariable
-            Long userId)
+    @GetMapping(value = "/user/{userId}", produces = {"application/json"})
+    public ResponseEntity<?> getUserById(@PathVariable Long userId)
     {
         User u = userService.findUserById(userId);
-        return new ResponseEntity<>(u,
-            HttpStatus.OK);
+        return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
     /**
@@ -72,12 +66,8 @@ public class UserController
      * @throws URISyntaxException Exception if something does not work in creating the location header
      * @see UserService#save(User) UserService.save(User)
      */
-    @PostMapping(value = "/user",
-        consumes = {"application/json"})
-    public ResponseEntity<?> addNewUser(
-        @Valid
-        @RequestBody
-            User newuser) throws URISyntaxException
+    @PostMapping(value = "/user", consumes = {"application/json"})
+    public ResponseEntity<?> addNewUser(@Valid @RequestBody User newuser) throws URISyntaxException
     {
         newuser.setUserid(0);
         newuser = userService.save(newuser);
@@ -103,9 +93,7 @@ public class UserController
      * @return Status of OK
      */
     @DeleteMapping(value = "/user/{id}")
-    public ResponseEntity<?> deleteUserById(
-        @PathVariable
-            long id)
+    public ResponseEntity<?> deleteUserById(@PathVariable long id)
     {
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

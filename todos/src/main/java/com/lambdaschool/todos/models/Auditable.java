@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 import static javax.persistence.TemporalType.TIMESTAMP;
@@ -40,7 +41,7 @@ abstract class Auditable
      * Temporal(TIMESTAMP) - Sets the precision of the date being saved. In this case Date and Time
      */
     @CreatedDate
-    @Temporal(TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
     protected Date createdDate;
 
     /**
@@ -55,6 +56,6 @@ abstract class Auditable
      * Temporal(TIMESTAMP) - Sets the precision of the date being saved. In this case Date and Time
      */
     @LastModifiedDate
-    @Temporal(TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
     protected Date lastModifiedDate;
 }
