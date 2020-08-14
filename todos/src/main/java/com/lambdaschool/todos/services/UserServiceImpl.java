@@ -68,6 +68,15 @@ public class UserServiceImpl implements UserService
     {
         User newUser = new User();
 
+        /*
+        if(user.getUserid() != 0) {
+            userrepos.findById(user.getUserid())
+                    .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+            newUser.setUserid((user.getUserid()));
+        }
+        */
+
         newUser.setUsername(user.getUsername().toLowerCase());
         newUser.setPassword(user.getPassword());
         newUser.setPrimaryemail(user.getPrimaryemail().toLowerCase());
@@ -81,6 +90,14 @@ public class UserServiceImpl implements UserService
         }
         newUser.setTodos(user.getTodos());
         */
+
+        //IT WORKS!!! HAHAHAHA!!!
+        for(Todos t : user.getTodos()) {
+            Todos newTodo = new Todos();
+            newTodo.setUser(newUser);
+            newTodo.setDescription(t.getDescription());
+            newUser.addTodos(newTodo);
+        }
 
         return userrepos.save(newUser);
     }
