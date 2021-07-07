@@ -1,6 +1,8 @@
 package com.lambdaschool.todos.services;
 
+import com.lambdaschool.todos.models.Todos;
 import com.lambdaschool.todos.models.User;
+import com.lambdaschool.todos.repository.TodosRepository;
 import com.lambdaschool.todos.repository.UserRepository;
 import com.lambdaschool.todos.views.UserNameCountTodos;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class UserServiceImpl implements UserService
     @Autowired
     private UserRepository userrepos;
 
+    @Autowired
+    private TodosRepository todosrepos;
+
     /**
      * Connects this service to the auditing service in order to get current user name
      */
@@ -44,9 +49,7 @@ public class UserServiceImpl implements UserService
          * findAll returns an iterator set.
          * iterate over the iterator set and add each element to an array list.
          */
-        userrepos.findAll()
-            .iterator()
-            .forEachRemaining(list::add);
+        userrepos.findAll().iterator().forEachRemaining(list::add);
         return list;
     }
 
@@ -65,18 +68,44 @@ public class UserServiceImpl implements UserService
     {
         User newUser = new User();
 
-        newUser.setUsername(user.getUsername()
-            .toLowerCase());
+        /*
+        if(user.getUserid() != 0) {
+            userrepos.findById(user.getUserid())
+                    .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+            newUser.setUserid((user.getUserid()));
+        }
+        */
+
+        newUser.setUsername(user.getUsername().toLowerCase());
         newUser.setPassword(user.getPassword());
-        newUser.setPrimaryemail(user.getPrimaryemail()
-            .toLowerCase());
+        newUser.setPrimaryemail(user.getPrimaryemail().toLowerCase());
+
+        /*
+        newUser.getTodos().clear();
+        for(Todos t : user.getTodos()) {
+            Todos newTodo = todosrepos.findById(t.getTodoid())
+                    .orElseThrow(() -> new EntityNotFoundException("No Todo Found"));
+            newUser.getTodos().add(newTodo);
+        }
+        newUser.setTodos(user.getTodos());
+        */
+
+        //IT WORKS!!! HAHAHAHA!!!
+        for(Todos t : user.getTodos()) {
+            Todos newTodo = new Todos();
+            newTodo.setUser(newUser);
+            newTodo.setDescription(t.getDescription());
+            newUser.addTodos(newTodo);
+        }
 
         return userrepos.save(newUser);
     }
 
+
     @Override
     public List<UserNameCountTodos> getCountUserTodos()
     {
-        return null;
+        return userrepos.getCountUserTodos();
     }
 }

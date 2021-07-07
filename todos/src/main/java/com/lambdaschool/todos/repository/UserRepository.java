@@ -4,6 +4,7 @@ import com.lambdaschool.todos.models.User;
 import com.lambdaschool.todos.views.UserNameCountTodos;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
